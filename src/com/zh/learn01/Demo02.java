@@ -64,7 +64,7 @@ class WriteThread implements Runnable{
             event.setEvent("thread id:"+Thread.currentThread().getId());
             dequeEvent.addFirst(event);
             try {
-                TimeUnit.SECONDS.sleep(1);
+                TimeUnit.SECONDS.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -99,12 +99,13 @@ class CleanTask extends Thread{
         do {
             Event event = dequeEvent.getLast();
             difference = date.getTime() - event.getDate().getTime();
-            if (difference > 10000) {
+            System.out.print("difference:"+difference);
+            if (difference > 1000) {
                 System.out.printf("Cleaner : %s\n", event.getEvent());
                 dequeEvent.removeLast();
                 delete = true;
             }
-        } while (difference > 10000);
+        } while (difference > 1000);
 
         if (delete) {
             System.out.println("Cleaner : Size of the queue :"
